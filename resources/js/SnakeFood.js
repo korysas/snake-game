@@ -1,20 +1,42 @@
 class SnakeFood {
   constructor(amount) {
     this.amount = amount;
+    this.foodCells = {};
   }
 
   getFoodCells(gameboard) {
-    var result = [];
+    var result = {};
 
     for (var i = 0; i < this.amount; i++) {
       var coord = this._getRandomCoordinate(gameboard.width, gameboard.height);
+      var key = this._coordToString(coord.x, coord.y);
       while (gameboard.getCellStyle(coord.x, coord.y) !== 'default') {
         coord = this._getRandomCoordinate(gameboard.width, gameboard.height);
+        key = this._coordToString(coord.x, coord.y);
       }
 
-      result.push(coord);
+      result[key] = coord;
     }
 
+    this.foodCells = result;
+    return result;
+  }
+
+  replaceFoodCell(x, y, gameboard) {
+    delete this.foodCells[this._coordToString(x, y)];
+
+    var coord = this._getRandomCoordinate(gameboard.width, gameboard.height);
+    var key = this._coordToString(coord.x, coord.y);
+    while (gameboard.getCellStyle(coord.x, coord.y) !== 'default') {
+      coord = this._getRandomCoordinate(gameboard.width, gameboard.height);
+      key = this._coordToString(coord.x, coord.y);
+    }
+
+    this.foodCells[key] = coord;
+  }
+
+  _coordToString(x, y) {
+    var result = '(' + x.toString() + ', ' + y.toString() + ')';
     return result;
   }
 

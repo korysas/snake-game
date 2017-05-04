@@ -53,6 +53,11 @@ class Gameboard {
   }
 
   _renderFood(foodCells) {
+    for (var key in foodCells) {
+      if (!foodCells.hasOwnProperty(key)) continue;
+      this._setCellStyle(foodCells[key].x, foodCells[key].y, 'food');
+    }
+
     for(var i = 0; i < foodCells.length; i++) {
       this._setCellStyle(foodCells[i].x, foodCells[i].y, 'food');
     }

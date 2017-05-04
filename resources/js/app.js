@@ -6,7 +6,7 @@ var head = new SnakeSegment(0, 0, 'down');
 var snake = new Snake(head);
 
 // initialize food
-var snakeFood = new SnakeFood(5);
+var snakeFood = new SnakeFood(50);
 foodCells = snakeFood.getFoodCells(gameboard);
 
 gameboard.renderGameboard(snake, foodCells);
@@ -50,6 +50,7 @@ var gameEngine = setInterval(function() {
   snake.move(lastArrowPressed);
   if (snake.isHeadOnFood(gameboard)) {
     snake.addSegment();
+    snakeFood.replaceFoodCell(snake.head.x, snake.head.y, gameboard);
   }
   gameboard.renderGameboard(snake, foodCells);
 }, timeDelay);
