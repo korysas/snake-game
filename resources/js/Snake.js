@@ -43,9 +43,14 @@ class Snake {
   }
 
   move(direction) {
+    // when you try to go in the opposite direction
     if (this._isOppositeDirection(direction, this.head.direction)) {
-      return;
+      direction = this.head.direction;
     }
+
+    // have we hit a wall
+
+    // have we hit some snake food
 
     switch (direction) {
       case 'left':
@@ -53,7 +58,7 @@ class Snake {
         this.head.direction = 'left';
         break;
       case 'up':
-        this._move(this.head.x, this.head.y + 1, this.head.direction, this.head);
+        this._move(this.head.x, this.head.y - 1, this.head.direction, this.head);
         this.head.direction = 'up';
         break;
       case 'right':
@@ -96,6 +101,24 @@ class Snake {
     }
 
     return false;
+  }
+
+  _getOppositeDirection(direction) {
+    if (direction === 'up') {
+      return 'down';
+    }
+
+    if (direction === 'down') {
+      return 'up';
+    }
+
+    if (direction === 'left') {
+      return 'right';
+    }
+
+    if (direction === 'right') {
+      return 'left';
+    }
   }
 
   _move(x, y, direction, segment) {
