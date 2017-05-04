@@ -2,6 +2,9 @@ class Gameboard {
   constructor(width, height) {
     this.width = width;
     this.height = height;
+
+    var htmlRepresentation = this._getHtmlRepresentation();
+    $("body").html(htmlRepresentation);
   }
 
   renderGameboard(snake, foodCells) {
@@ -14,6 +17,13 @@ class Gameboard {
     this._renderSnake(snake);
 
     // place food
+    this._renderFood(foodCells);
+  }
+
+  getCellStyle(x, y) {
+    var cell = $("#gameboard")[0].rows[y].cells[x];
+    var style = $(cell).children().attr("class");
+    return style;
   }
 
   _getHtmlRepresentation() {
@@ -42,8 +52,15 @@ class Gameboard {
     }
   }
 
+  _renderFood(foodCells) {
+    for(var i = 0; i < foodCells.length; i++) {
+      this._setCellStyle(foodCells[i].x, foodCells[i].y, 'food');
+    }
+  }
+
   _setCellStyle(x, y, style) {
     var cell = $("#gameboard")[0].rows[y].cells[x];
+    $(cell).children().removeClass();
     $(cell).children().addClass(style);
   }
 }

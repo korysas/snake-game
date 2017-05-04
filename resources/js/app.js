@@ -1,11 +1,15 @@
-// instantiate a 40 x 40 Gameboard
+// initialize a Gameboard
 var gameboard = new Gameboard(40, 40);
 
-// instantiate snake
+// initialize snake
 var head = new SnakeSegment(0, 0, 'down');
 var snake = new Snake(head);
 
-gameboard.renderGameboard(snake, null);
+// initialize food
+var snakeFood = new SnakeFood(5);
+foodCells = snakeFood.getFoodCells(gameboard);
+
+gameboard.renderGameboard(snake, foodCells);
 
 // obtain user input, we use down as starting direction
 var lastArrowPressed = 'down';
@@ -41,8 +45,11 @@ $(document).keydown(function(e) {
 });
 
 // constantly move snake and re-render gameboard
-var timeDelay = 300;
-setInterval(function() {
+var timeDelay = 100;
+var gameEngine = setInterval(function() {
   snake.move(lastArrowPressed);
-  gameboard.renderGameboard(snake, null);
+  if (snake.isHeadOnFood(gameboard)) {
+    snake.addSegment();
+  }
+  gameboard.renderGameboard(snake, foodCells);
 }, timeDelay);

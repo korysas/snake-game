@@ -75,6 +75,13 @@ class Snake {
     }
   }
 
+  isHeadOnFood(gameboard) {
+    var cellStyle = gameboard.getCellStyle(this.head.x, this.head.y);
+    if (cellStyle === 'food') {
+      return true;
+    }
+  }
+
   _isOppositeDirection(d1, d2) {
     if (d1 === 'up') {
       if (d2 === 'down') {
@@ -122,7 +129,7 @@ class Snake {
   }
 
   _move(x, y, direction, segment) {
-    // base case, we are the tail, move the coordinate to the preceding segment
+    // base case, we are ar the tail, move the coordinate to the next segment
     if (segment.next === null) {
       segment.x = x;
       segment.y = y;
