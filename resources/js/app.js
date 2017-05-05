@@ -1,8 +1,8 @@
 // initialize a Gameboard
-var gameboard = new Gameboard(40, 40);
+var gameboard = new Gameboard(60, 40);
 
 // initialize snake
-var head = new SnakeSegment(0, 0, 'down');
+var head = new SnakeSegment(1, 1, 'down');
 var snake = new Snake(head);
 
 // initialize food
@@ -48,9 +48,28 @@ $(document).keydown(function(e) {
 var timeDelay = 100;
 var gameEngine = setInterval(function() {
   snake.move(lastArrowPressed);
+
+  // snake on food
   if (snake.isHeadOnFood(gameboard)) {
     snake.addSegment();
     snakeFood.replaceFoodCell(snake.head.x, snake.head.y, gameboard);
   }
+
+  // snake hitting wall
+  if (snake.isHeadBeyondWall(gameboard)) {
+    endGame(gameEngine);
+  }
+
+  // snake hitting own body
+  if (snake.isHeadOnSnakeBody(gameboard)) {
+    endGame(gameEngine);
+  }
+
   gameboard.renderGameboard(snake, foodCells);
 }, timeDelay);
+
+function endGame(gameEngine) {
+  clearInterval(gameEngine);
+
+  alert("oh no! you died :(");
+}

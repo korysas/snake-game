@@ -21,18 +21,48 @@ class Gameboard {
   }
 
   getCellStyle(x, y) {
+    if (x < 0 || x >= this.width || y < 0 || y >= this.height) {
+      return 'default';
+    }
+
     var cell = $("#gameboard")[0].rows[y].cells[x];
     var style = $(cell).children().attr("class");
     return style;
   }
 
   _getHtmlRepresentation() {
-    var result = "<table id=gameboard>";
-    for (var i = 0; i < this.width; i++) {
+    var result = "<table id=gameboard cellspacing=0 cellpadding=0>";
+    for (var i = 0; i < this.height; i++) {
       result += "<tr>";
 
-      for (var j = 0; j < this.height; j++) {
-        var cell = "<div class=default></div>";
+      for (var j = 0; j < this.width; j++) {
+        var style = '';
+
+        var isStyleSet = false;
+        if (i === 0) {
+          style += 'border-top ';
+          isStyleSet = true;
+        }
+
+        if (i === this.height - 1) {
+          style += 'border-bottom ';
+          isStyleSet = true;
+        }
+
+        if (j === 0) {
+          style += 'border-left ';
+          isStyleSet = true;
+        }
+
+        if (j === this.width - 1) {
+          style += 'border-right';
+          isStyleSet = true;
+        }
+
+        if (!isStyleSet)
+          style = 'default';
+
+        var cell = "<div class=" + "'" + style + "'" + "></div>";
 
         result += "<td>" + cell + "</td>";
       }
@@ -45,7 +75,10 @@ class Gameboard {
   }
 
   _renderSnake(snake) {
-    var segment = snake.head;
+    var head = snake.head;
+    this._setCellStyle(head.x, head.y, 'snake-head');
+
+    var segment = snake.head.next;
     while (segment !== null) {
       this._setCellStyle(segment.x, segment.y, 'snake-segment');
       segment = segment.next;

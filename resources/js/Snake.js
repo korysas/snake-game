@@ -82,6 +82,27 @@ class Snake {
     }
   }
 
+  isHeadBeyondWall(gameboard) {
+    if (this.head.x === -1 || this.head.x === gameboard.width) {
+      return true;
+    }
+
+    if (this.head.y === -1 || this.head.y === gameboard.height) {
+      return true;
+    }
+
+    return false;
+  }
+
+  isHeadOnSnakeBody(gameboard) {
+    var style = gameboard.getCellStyle(this.head.x, this.head.y);
+    if (style === 'snake-segment') {
+      return true;
+    }
+
+    return false;
+  }
+
   _isOppositeDirection(d1, d2) {
     if (d1 === 'up') {
       if (d2 === 'down') {

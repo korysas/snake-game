@@ -41,8 +41,8 @@ class SnakeFood {
   }
 
   _getRandomCoordinate(width, height) {
-    var x = this._getRandomInt(0, height);
-    var y = this._getRandomInt(0, width);
+    var x = this._getRandomInt(0, width);
+    var y = this._getRandomInt(0, height);
     return {'x':x, 'y': y};
   }
 
