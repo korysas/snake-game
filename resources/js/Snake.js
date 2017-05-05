@@ -4,6 +4,7 @@ class Snake {
   constructor(head) {
     this.head = head;
     this.tail = head;
+    this.length = 1;
   }
 
   print() {
@@ -16,6 +17,7 @@ class Snake {
   }
 
   addSegment() {
+    this.length++;
     var x_tail = this.tail.x;
     var y_tail = this.tail.y;
 

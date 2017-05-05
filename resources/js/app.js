@@ -11,6 +11,9 @@ foodCells = snakeFood.getFoodCells(gameboard);
 
 gameboard.renderGameboard(snake, foodCells);
 
+// initialize score
+$(".score h1").text('0');
+
 // obtain user input, we use down as starting direction
 var lastArrowPressed = 'down';
 $(document).keydown(function(e) {
@@ -46,12 +49,14 @@ $(document).keydown(function(e) {
 
 // constantly move snake and re-render gameboard
 var timeDelay = 100;
+var score = 0;
 var gameEngine = setInterval(function() {
   snake.move(lastArrowPressed);
 
   // snake on food
   if (snake.isHeadOnFood(gameboard)) {
     snake.addSegment();
+    $(".score h1").text((++score).toString());
     snakeFood.replaceFoodCell(snake.head.x, snake.head.y, gameboard);
   }
 

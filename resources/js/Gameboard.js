@@ -4,14 +4,14 @@ class Gameboard {
     this.height = height;
 
     var htmlRepresentation = this._getHtmlRepresentation();
-    $("body").html(htmlRepresentation);
+    $("#game-area").html(htmlRepresentation);
+
+    this.htmlRepresentation = htmlRepresentation;
   }
 
   renderGameboard(snake, foodCells) {
-    var htmlRepresentation = this._getHtmlRepresentation();
-
     // place blank htmlRepresentation into the web browser
-    $("body").html(htmlRepresentation);
+    $("#game-area").html(this.htmlRepresentation);
 
     // place snake
     this._renderSnake(snake);
