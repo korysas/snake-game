@@ -6,7 +6,7 @@ var head = new SnakeSegment(1, 1, 'down');
 var snake = new Snake(head);
 
 // initialize food
-var snakeFood = new SnakeFood(50);
+var snakeFood = new SnakeFood(1);
 foodCells = snakeFood.getFoodCells(gameboard);
 
 gameboard.renderGameboard(snake, foodCells);
@@ -48,7 +48,7 @@ $(document).keydown(function(e) {
 });
 
 // constantly move snake and re-render gameboard
-var timeDelay = 100;
+var timeDelay = 50;
 var score = 0;
 var gameEngine = setInterval(function() {
   snake.move(lastArrowPressed);
@@ -56,25 +56,49 @@ var gameEngine = setInterval(function() {
   // snake on food
   if (snake.isHeadOnFood(gameboard)) {
     snake.addSegment();
-    $(".score h1").text((++score).toString());
+    $(".info h1").text((++score).toString());
     snakeFood.replaceFoodCell(snake.head.x, snake.head.y, gameboard);
   }
 
   // snake hitting wall
   if (snake.isHeadBeyondWall(gameboard)) {
-    endGame(gameEngine);
+    endGame(gameEngine, timer);
   }
 
   // snake hitting own body
   if (snake.isHeadOnSnakeBody(gameboard)) {
-    endGame(gameEngine);
+    endGame(gameEngine, timer);
   }
 
   gameboard.renderGameboard(snake, foodCells);
 }, timeDelay);
 
-function endGame(gameEngine) {
-  clearInterval(gameEngine);
+var start = new Date().getTime();
+var timer = setInterval(function() {
+    var now = new Date().getTime();
+    var distance = now - start;
 
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    var formattedHours = formatTime(hours.toString());
+    var formattedMinutes = formatTime(minutes.toString());
+    var formattedSeconds = formatTime(seconds.toString());
+
+    $(".timer h1").text(formattedHours + ':' + formattedMinutes + ':' + formattedSeconds);
+});
+
+
+function endGame(gameEngine, timer) {
+  clearInterval(gameEngine);
+  clearInterval(timer);
   alert("oh no! you died :(");
+}
+
+function formatTime(timeString) {
+  if (timeString.length === 1) {
+    return '0' + timeString;
+  }
+  return timeString;
 }

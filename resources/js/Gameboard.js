@@ -74,6 +74,8 @@ class Gameboard {
     return result;
   }
 
+  // TODO: maybe not need to render entire snake?
+  // can we instead place the the tail in front of the head.
   _renderSnake(snake) {
     var head = snake.head;
     this._setCellStyle(head.x, head.y, 'snake-head');
@@ -85,6 +87,8 @@ class Gameboard {
     }
   }
 
+  // TODO: after the first call to _renderFood, we should just render the
+  // single food cell instead of re-rendering all of the food cells.
   _renderFood(foodCells) {
     for (var key in foodCells) {
       if (!foodCells.hasOwnProperty(key)) continue;

@@ -57,8 +57,18 @@ body {
   display: flex;
 }
 
-.score {
+.info {
   display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   flex-grow: 1;
-  padding-left: 3rem;
+  padding-left: 2rem;
+}
+
+h1, h4 {
+  margin: 0;
+}
+
+.score {
+  margin-bottom: 1rem;
 }
