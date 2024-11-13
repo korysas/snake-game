@@ -6,7 +6,7 @@ var head = new SnakeSegment(1, 1, 'down');
 var snake = new Snake(head);
 
 // initialize food
-var snakeFood = new SnakeFood(100);
+var snakeFood = new SnakeFood(500);
 foodCells = snakeFood.getFoodCells(gameboard);
 
 gameboard.renderGameboard(snake, foodCells);
